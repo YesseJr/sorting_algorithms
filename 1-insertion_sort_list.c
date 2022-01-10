@@ -11,50 +11,53 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - Performs insertion sort on a doubly linked list of
- * integers in ascending order.
+ * insertion_sort_list - inserts right unsorted side into left sorted side
+ * @list: doubly linked list to sort
  *
- * @list: A double pointer to the doubly linked list.
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *currnode;
-	listint_t *prevnode;
-	listint_t *nextnode;
+	listin_t *cur;
+    listint_t *prv;
+    listint_t *nxt;
 
-	if (list == NULL || *list == NULL)
+	if (list == NULL || (*list)->next == NULL)
 		return;
 
-	currnode = (*list)->next;
-	while (currnode != NULL)
+	cur = (*list)->next;
+	nxt = cur->next;
+	while (c)
 	{
-		nextnode = currnode->next;
-		prevnode = currnode->prev;
-		if (prevnode && currnode->n < prevnode->n)
+		if (cur->n < cur->prev->n)
 		{
-			prevnode->next = currnode->next;
-			if (nxt != NULL)
-				nextnode->prev = prevnode;
-			prevnode = prevnode->prev;
-			if (prevnode == NULL)
+			p = c->prev;
+			while (prv && (cur->n < prv->n))
 			{
-				currnode->prev = NULL;
-				currnode->next = *list;
-				(*list)->prev = currnode;
-				*list = currnode;
+				if (!(prv->prev))
+				{
+					prv->prev = cur;
+					cur->prev->next = cur->next;
+					if (cur->next)
+						cur->next->prev = cur->prev;
+					cur->next = prv;
+					cur->prev = NULL;
+					*list = cur;
+				}
+				else
+				{
+					cur->prev->next = cur->next;
+					if (cur->next)
+						cur->next->prev = cur->prev;
+					prv->prev->next = cur;
+					cur->prev = prv->prev;
+					prv->prev = cur;
+					cur->next = prv;
+				}
+				print_list(*list);
+				prv = cur->prev;
 			}
-			else
-			{
-				currnode->prev = prevnode;
-				currnode->next = prevnode->next;
-				prevnode->next->prev = currnode;
-				prevnode->next = currnode;
-			}
-			print_list(*list);
 		}
-		else
-		{
-			currnode = nextnode;
-		}
+		cur = nxt;
+		cur ? (nxt = c->next) : (nxt = NULL);
 	}
 }
