@@ -18,43 +18,43 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *cur;
-	listint_t *prv;
-	listint_t *nxt;
+	listint_t *currnode;
+	listint_t *prevnode;
+	listint_t *nextnode;
 
 	if (list == NULL || *list == NULL)
 		return;
 
-	cur = (*list)->next;
-	while (cur != NULL)
+	currnode = (*list)->next;
+	while (currnode != NULL)
 	{
-		nxt = cur->next;
-		prv = cur->prev;
-		if (prv && cur->n < prv->n)
+		nextnode = currnode->next;
+		prevnode = currnode->prev;
+		if (prevnode && currnode->n < prevnode->n)
 		{
-			prv->next = cur->next;
+			prevnode->next = currnode->next;
 			if (nxt != NULL)
-				nxt->prev = prv;
-			prv = prv->prev;
-			if (prv == NULL)
+				nextnode->prev = prevnode;
+			prevnode = prevnode->prev;
+			if (prevnode == NULL)
 			{
-				cur->prev = NULL;
-				cur->next = *list;
-				(*list)->prev = cur;
-				*list = cur;
+				currnode->prev = NULL;
+				currnode->next = *list;
+				(*list)->prev = currnode;
+				*list = currnode;
 			}
 			else
 			{
-				cur->prev = prv;
-				cur->next = prv->next;
-				prv->next->prev = cur;
-				prv->next = cur;
+				currnode->prev = prevnode;
+				currnode->next = prevnode->next;
+				prevnode->next->prev = currnode;
+				prevnode->next = currnode;
 			}
 			print_list(*list);
 		}
 		else
 		{
-			cur = nxt;
+			currnode = nextnode;
 		}
 	}
 }
