@@ -3,57 +3,58 @@
  * Author: Waython Yesse
  * Occupation: Software Engineering Student at ALX
  * Address: waythonny@yahoo.com
- * Year: 2022 January 06
+ * Year: 2022 January 10
  * ** HAPPY NEW YEAR, HAPPY NEW CODE **
  */
+
 
 #include "sort.h"
 
 /**
- * insertion_sort_list - inserts right unsorted side into left sorted side
- * @list: doubly linked list to sort
+ * insertion_sort_list - Performs insertion sort on a doubly linked list of
+ * integers in ascending order.
  *
+ * @list: A double pointer to the doubly linked list.
  */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *c, *p, *nextnode;
+	listint_t *cur;
+	listint_t *prv;
+	listint_t *nxt;
 
-	if (list == NULL || !(*list) || (*list)->next == NULL)
+	if (list == NULL || *list == NULL)
 		return;
-	c = (*list)->next;
-	nextnode = c->next;
-	while (c)
+
+	cur = (*list)->next;
+	while (cur != NULL)
 	{
-		if (c->n < c->prev->n)
+		nxt = cur->next;
+		prv = cur->prev;
+		if (prv && cur->n < prv->n)
 		{
-			p = c->prev;
-			while (p && (c->n < p->n))
+			prv->next = cur->next;
+			if (nxt != NULL)
+				nxt->prev = prv;
+			prv = prv->prev;
+			if (prv == NULL)
 			{
-				if (!(p->prev))
-				{
-					p->prev = c;
-					c->prev->next = c->next;
-					if (c->next)
-						c->next->prev = c->prev;
-					c->next = p;
-					c->prev = NULL;
-					*list = c;
-				}
-				else
-				{
-					c->prev->next = c->next;
-					if (c->next)
-						c->next->prev = c->prev;
-					p->prev->next = c;
-					c->prev = p->prev;
-					p->prev = c;
-					c->next = p;
-				}
-				print_list(*list);
-				p = c->prev;
+				cur->prev = NULL;
+				cur->next = *list;
+				(*list)->prev = cur;
+				*list = cur;
 			}
+			else
+			{
+				cur->prev = prv;
+				cur->next = prv->next;
+				prv->next->prev = cur;
+				prv->next = cur;
+			}
+			print_list(*list);
 		}
-		c = nextnode;
-		c ? (nextnode = c->next) : (nextnode = NULL);
+		else
+		{
+			cur = nxt;
+		}
 	}
 }
