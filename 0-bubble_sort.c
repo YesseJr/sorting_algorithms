@@ -8,39 +8,36 @@
  */
 
 #include "sort.h"
-
 /**
- * bubble_sort - bubble sorting of an array of integers in ascending order
- * @array - array to be sorted
- * @size - size_t variable representing the size of an array
- * 
- * Description: Print ana array each after the swap of two elements
+ * bubble_sort - sorts bubbly
+ * @array: array to sort
+ * @size: size
+ *
  */
-
-void bubble_sort(int *array, size_t size);
+void bubble_sort(int *array, size_t size)
 {
-    size_t idx, coding = size;
-    int temp, swap;
+	size_t i, newsize = size;
+	int tmp, swap;
 
-    if (array == NUL || size == 0 || size == 1)
-            return;
+	if (array == NULL || size < 2)
+		return;
 
-    while (coding)
-        {
-            swap = 0;
-            for (idx = 0; idx < coding; idx++)
-               {
-                   if (array[idx] > array[idx + 1])
-                      {
-                          temp = array[idx + 1];
-                          array[idx + 1] = array[idx];
-                          array[idx] = temp;
-                          print_array(array, size);
-                          swap = 1
-                      }
-               }
-               coding--;
-               if (!swap)
-                       break,
-        }
+	while (newsize)
+	{
+		swap = 0;
+		for (i = 0; i < newsize - 1; i++)
+		{
+			if (array[i] > array[i + 1])
+			{
+				tmp = array[i + 1];
+				array[i + 1] = array[i];
+				array[i] = tmp;
+				print_array(array, size);
+				swap = 1;
+			}
+		}
+		newsize--;
+		if (!swap)
+			break;
+	}
 }
